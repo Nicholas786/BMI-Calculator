@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator BMI</title>
+    <link rel="stylesheet" href="style.css">
+<style type="text/css" id="dcoder_stylesheet">* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f8ff;
+}
+
+.app-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-top: 5px;
+    opacity: 0.9;
+}
+
+.input-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #6e8efb;
+    outline: none;
+}
+
+.gender-select {
+    margin-bottom: 20px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+button {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #5d7df7, #9668d8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.result-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: none; /* Akan ditampilkan melalui JavaScript */
+}
+
+.result-card {
+    text-align: center;
+}
+
+.result-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.bmi-value {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.bmi-category {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.underweight {
+    background-color: #90CAF9;
+    color: #0D47A1;
+}
+
+.normal {
+    background-color: #A5D6A7;
+    color: #1B5E20;
+}
+
+.overweight {
+    background-color: #FFE082;
+    color: #FF6F00;
+}
+
+.obese {
+    background-color: #EF9A9A;
+    color: #B71C1C;
+}
+
+.result-details {
+    line-height: 1.6;
+    color: #555;
+}
+
+.history-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+}
+
+.history-section h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #444;
+}
+
+#history-list {
+    list-style-type: none;
+    margin-bottom: 15px;
+}
+
+#history-list li {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+#history-list li:last-child {
+    border-bottom: none;
+}
+
+#clear-history-btn {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    margin-top: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 15px;
+    }
+    
+    header {
+        margin-bottom: 20px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+}</style></head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Kalkulator BMI</h1>
+            <p class="subtitle">Aplikasi Hybrid dengan Dcoder</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="name">Nama:</label>
+                    <input type="text" id="name" placeholder="Masukkan nama Anda">
+                </div>
+                
+                <div class="input-group">
+                    <label for="height">Tinggi Badan (cm):</label>
+                    <input type="number" id="height" placeholder="Contoh: 170">
+                </div>
+                
+                <div class="input-group">
+                    <label for="weight">Berat Badan (kg):</label>
+                    <input type="number" id="weight" placeholder="Contoh: 65">
+                </div>
+                
+                <div class="gender-select">
+                    <label>Jenis Kelamin:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="male" checked>
+                        <label for="male">Laki-laki</label>
+                        
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Perempuan</label>
+                    </div>
+                </div>
+                
+                <button id="calculate-btn">Hitung BMI</button>
+            </div>
+            
+            <div class="result-section" id="result-section">
+                <!-- Hasil akan ditampilkan di sini -->
+            </div>
+            
+            <div class="history-section">
+                <h2>Riwayat Perhitungan</h2>
+                <ul id="history-list">
+                    <!-- Riwayat akan ditampilkan di sini -->
+                </ul>
+                <button id="clear-history-btn">Hapus Riwayat</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Proyek Sekolah Aplikasi Hybrid - Dibuat dengan Dcoder</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+
+<script type="text/javascript" id="dcoder_script">// Elemen DOM
+const nameInput = document.getElementById('name');
+const heightInput = document.getElementById('height');
+const weightInput = document.getElementById('weight');
+const calculateBtn = document.getElementById('calculate-btn');
+const resultSection = document.getElementById('result-section');
+const historyList = document.getElementById('history-list');
+const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+// Menyimpan riwayat perhitungan dari localStorage atau array kosong jika tidak ada
+let history = JSON.parse(localStorage.getItem('bmiHistory')) || [];
+
+// Menampilkan riwayat yang tersimpan saat aplikasi dimuat
+displayHistory();
+
+// Event listener untuk tombol hitung
+calculateBtn.addEventListener('click', function() {
+    // Validasi input
+    if (!validateInputs()) {
+        return;
+    }
+    
+    // Mengambil nilai input
+    const name = nameInput.value;
+    const height = parseFloat(heightInput.value);
+    const weight = parseFloat(weightInput.value);
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    
+    // Menghitung BMI
+    const bmi = calculateBMI(weight, height);
+    const category = getBMICategory(bmi);
+    const recommendation = getRecommendation(category);
+    
+    // Menampilkan hasil
+    displayResult(name, bmi, category, recommendation);
+    
+    // Menyimpan ke riwayat
+    saveToHistory(name, height, weight, gender, bmi, category);
+    
+    // Mengatur efek haptic/getaran (simulasi sentuhan native)
+    if ('vibrate' in navigator) {
+        navigator.vibrate(100); // Getaran 100ms
+    }
+});
+
+// Event listener untuk tombol hapus riwayat
+clearHistoryBtn.addEventListener('click', function() {
+    // Konfirmasi sebelum menghapus
+    if (confirm('Apakah Anda yakin ingin menghapus semua riwayat?')) {
+        history = [];
+        localStorage.removeItem('bmiHistory');
+        displayHistory();
+        
+        // Mengatur efek haptic/getaran
+        if ('vibrate' in navigator) {
+            navigator.vibrate([50, 30, 50]); // Pola getaran
+        }
+    }
+});
+
+// Fungsi validasi input
+function validateInputs() {
+    const name = nameInput.value.trim();
+    const height = heightInput.value;
+    const weight = weightInput.value;
+    
+    if (name === '') {
+        alert('Silakan masukkan nama Anda');
+        nameInput.focus();
+        return false;
+    }
+    
+    if (height === '' || isNaN(height) || height <= 0) {
+        alert('Silakan masukkan tinggi badan yang valid');
+        heightInput.focus();
+        return false;
+    }
+    
+    if (weight === '' || isNaN(weight) || weight <= 0) {
+        alert('Silakan masukkan berat badan yang valid');
+        weightInput.focus();
+        return false;
+    }
+    
+    return true;
+}
+
+// Fungsi perhitungan BMI
+function calculateBMI(weight, height) {
+    // Konversi cm ke m dan hitung BMI
+    const heightInMeters = height / 100;
+    return (weight / (heightInMeters * heightInMeters)).toFixed(1);
+}
+
+// Fungsi menentukan kategori BMI
+function getBMICategory(bmi) {
+    bmi = parseFloat(bmi);
+    
+    if (bmi < 18.5) {
+        return 'Kekurangan Berat Badan';
+    } else if (bmi >= 18.5 && bmi < 25) {
+        return 'Normal (Ideal)';
+    } else if (bmi >= 25 && bmi < 30) {
+        return 'Kelebihan Berat Badan';
+    } else {
+        return 'Obesitas';
+    }
+}
+
+// Fungsi mendapatkan rekomendasi berdasarkan kategori BMI
+function getRecommendation(category) {
+    switch(category) {
+        case 'Kekurangan Berat Badan':
+            return 'Anda mungkin perlu menambah asupan kalori dan protein. Konsultasikan dengan ahli gizi untuk program penambahan berat badan yang sehat.';
+        case 'Normal (Ideal)':
+            return 'Pertahankan pola makan dan aktivitas fisik Anda. Lakukan pemeriksaan BMI secara rutin setiap 6 bulan.';
+        case 'Kelebihan Berat Badan':
+            return 'Pertimbangkan untuk meningkatkan aktivitas fisik dan menyesuaikan pola makan. Kurangi konsumsi makanan tinggi kalori dan gula.';
+        case 'Obesitas':
+            return 'Disarankan untuk berkonsultasi dengan dokter atau ahli gizi untuk mendapatkan program penurunan berat badan yang aman dan efektif.';
+        default:
+            return 'Silakan konsultasikan hasil BMI Anda dengan profesional kesehatan.';
+    }
+}
+
+// Fungsi menampilkan hasil perhitungan
+function displayResult(name, bmi, category, recommendation) {
+    // Menentukan kelas CSS untuk kategori
+    let categoryClass;
+    switch(category) {
+        case 'Kekurangan Berat Badan':
+            categoryClass = 'underweight';
+            break;
+        case 'Normal (Ideal)':
+            categoryClass = 'normal';
+            break;
+        case 'Kelebihan Berat Badan':
+            categoryClass = 'overweight';
+            break;
+        case 'Obesitas':
+            categoryClass = 'obese';
+            break;
+        default:
+            categoryClass = '';
+    }
+    
+    // Membuat HTML untuk hasil
+    resultSection.innerHTML = `
+        <div class="result-card">
+            <h3>Hasil BMI untuk ${name}</h3>
+            <div class="bmi-value">${bmi}</div>
+            <div class="bmi-category ${categoryClass}">${category}</div>
+            <div class="result-details">
+                <p>${recommendation}</p>
+            </div>
+        </div>
+    `;
+    
+    // Menampilkan hasil
+    resultSection.style.display = 'block';
+    
+    // Scroll ke hasil
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Fungsi menyimpan ke riwayat
+function saveToHistory(name, height, weight, gender, bmi, category) {
+    // Membuat objek data riwayat baru
+    const now = new Date();
+    const historyItem = {
+        id: Date.now(), // ID unik berdasarkan timestamp
+        name: name,
+        height: height,
+        weight: weight,
+        gender: gender,
+        bmi: bmi,
+        category: category,
+        date: now.toLocaleDateString('id-ID'),
+        time: now.toLocaleTimeString('id-ID')
+    };
+    
+    // Menambahkan ke array riwayat
+    history.unshift(historyItem); // Tambahkan di awal array
+    
+    // Batasi jumlah riwayat yang disimpan (opsional)
+    if (history.length > 10) {
+        history = history.slice(0, 10);
+    }
+    
+    // Menyimpan ke localStorage
+    localStorage.setItem('bmiHistory', JSON.stringify(history));
+    
+    // Memperbarui tampilan riwayat
+    displayHistory();
+}
+
+// Fungsi menampilkan riwayat
+function displayHistory() {
+    // Bersihkan daftar riwayat
+    historyList.innerHTML = '';
+    
+    // Jika tidak ada riwayat
+    if (history.length === 0) {
+        historyList.innerHTML = '<li>Belum ada riwayat perhitungan</li>';
+        return;
+    }
+    
+    // Menampilkan setiap item riwayat
+    history.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>${item.name}</strong> (${item.gender === 'male' ? 'Laki-laki' : 'Perempuan'})
+            <br>BMI: <strong>${item.bmi}</strong> - ${item.category}
+            <br>Tinggi: ${item.height} cm, Berat: ${item.weight} kg
+            <br><small>Dihitung pada ${item.date} ${item.time}</small>
+        `;
+        historyList.appendChild(li);
+    });
+}</script></body></html>
